@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./builderstyle.css" />
+    <title>Order Promotion Form</title>
+  </head>
+  <body>
+    <script src="./datafetcher.js"></script>
+    <div class="container">
+      <h1>Create New Scenario</h1>
+
+      <!-- Scenario Description Box -->
+      <div class="form-section">
+        <h2>Scenario Description</h2>
+        <div class="form-group">
+          <label for="scenarioDescription">Scenario Description:</label>
+          <textarea
+            id="scenarioDescription"
+            placeholder="Enter a brief description of the scenario"
+            rows="4"
+            cols="50"
+          ></textarea>
+        </div>
+      </div>
+
+      <form id="promotionForm">
+        <!-- Section 2: Order Sale Items -->
+        <div class="form-section">
+          <h2>Order Sale Items</h2>
+          <div class="form-group">
+            <label for="itemCodeDropdown">Item Code:</label>
+            <select id="itemCodeDropdown">
+              <option value="">Select Item Code</option>
+              <!-- Item Codes will be populated here dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="itemName">Item Name:</label>
+            <input type="text" id="itemName" placeholder="Enter Item Name" />
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              placeholder="Enter Quantity"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label for="unitType">Unit Type:</label>
+            <select id="unitType">
+              <option value="SIMPLE_QUANTITY">SIMPLE_QUANTITY</option>
+              <option value="GRAMS">Grams</option>
+              <option value="POUNDS">Pounds</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="unitPrice">Unit Price:</label>
+            <input type="text" id="unitPrice" placeholder="Enter Unit Price" />
+          </div>
+          <div class="form-group">
+            <label for="clearanceLevel">Clearance Level:</label>
+            <select id="clearanceLevel">
+              <option value="NOT_ON_CLEARANCE">NOT_ON_CLEARANCE</option>
+              <option value="FULL_PRICE">FULL_PRICE</option>
+              <option value="ANY_CLEARANCE_LEVEL">ANY_CLEARANCE_LEVEL</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Section 3: MNUP Details -->
+        <div class="form-section">
+          <h2>MNUP Details</h2>
+          <div class="form-group">
+            <label for="discountAmount">Discount Amount:</label>
+            <input
+              type="text"
+              id="discountAmount"
+              placeholder="Enter Discount Amount"
+            />
+          </div>
+          <div class="form-group">
+            <label for="unitCalculateAmount">Unit Calculate Amount:</label>
+            <input
+              type="text"
+              id="unitCalculateAmount"
+              placeholder="Enter Unit Calculate Amount"
+            />
+          </div>
+          <div class="form-group">
+            <label for="returnsAmount">Returns Amount:</label>
+            <input
+              type="text"
+              id="returnsAmount"
+              placeholder="Enter Returns Amount"
+            />
+          </div>
+        </div>
+
+        <!-- Section 4: Selling Engine Details -->
+        <div class="form-section">
+          <h2>Selling Engine Details</h2>
+          <div class="form-group">
+            <label for="discountType">Discount Type:</label>
+            <select id="discountType">
+              <option value="CENTS_OFF">CENTS_OFF</option>
+              <option value="PERCENT_OFF">PERCENT_OFF</option>
+              <option value="PRICE_POINT">PRICE_POINT</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="promotionNameDropdown">Promotion Name:</label>
+            <select id="promotionNameDropdown">
+              <option value="">Select Promotion Name</option>
+              <!-- Promotion Names will be populated here dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="promotionType">Promotion Type:</label>
+            <select id="promotionType">
+              <option value="PROMOTIONAL_DISCOUNT">Promotional Discount</option>
+              <option value="UPC5_COUPON">UPC5 Coupon</option>
+              <option value="MANUFACTURER_COUPON">Manufacturer Coupon</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" placeholder="Enter The Amount" />
+          </div>
+          <div class="form-group">
+            <label for="totalDiscountAmount">Total Discount Amount:</label>
+            <input
+              type="text"
+              id="totalDiscountAmount"
+              placeholder="Enter Total Discount Amount"
+            />
+          </div>
+          <div class="form-group">
+            <label for="level">Level:</label>
+            <select id="level">
+              <option value="ITEM_LEVEL">ITEM_LEVEL</option>
+              <option value="ORDER_LEVEL">ORDER_LEVEL</option>
+              <option value="DEPARTMENT_LEVEL">DEPARTMENT_LEVEL</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="submit">Create Scenario</button>
+        </div>
+      </form>
+
+      <!-- Area to display the generated BDD Scenario -->
+      <div class="form-section">
+        <h2>Generated BDD Scenario</h2>
+        <pre id="bddScenarioOutput"></pre>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("promotionForm");
+        const bddOutput = document.getElementById("bddScenarioOutput");
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent form submission
+
+          // Collect form data
+          const scenarioDescription = document.getElementById("scenarioDescription").value;
+          const itemCode = document.getElementById("itemCodeDropdown").value;
+          const itemName = document.getElementById("itemName").value;
+          const quantity = document.getElementById("quantity").value;
+          const unitType = document.getElementById("unitType").value;
+          const unitPrice = document.getElementById("unitPrice").value;
+          const clearanceLevel = document.getElementById("clearanceLevel").value;
+          const discountAmount = document.getElementById("discountAmount").value;
+          const unitCalculateAmount = document.getElementById("unitCalculateAmount").value;
+          const returnsAmount = document.getElementById("returnsAmount").value;
+          const promotionName = document.getElementById("promotionNameDropdown").value;
+          const discountType = document.getElementById("discountType").value;
+          const promotionType = document.getElementById("promotionType").value;
+          const amount = document.getElementById("amount").value;
+          const totalDiscountAmount = document.getElementById("totalDiscountAmount").value;
+          const level = document.getElementById("level").value;
+
+          // Generate BDD scenario with the requested format
+          const bddScenario = `
+Scenario: CategoryID_001 ${scenarioDescription}
+  Given I have an order
+  And Order has sale items with the following values
+    | sequenceId | itemCode     | itemName | quantity.units | quantity.unitType | unitPrice | clearanceLevel   |
+    | 100001     | ${itemCode} | ${itemName} | ${quantity} | ${unitType} | ${unitPrice} | ${clearanceLevel} |
+  When I submit the order to ULP GET with the following headers
+    | nep-device-id | nep-application-key              |
+    | 111111        | 8a0285826c687337016cfa50d9e7008d |
+  And I submit the order to ULP Finalize with the following headers
+    | nep-device-id | nep-application-key              |
+    | 111111        | 8a808f0d6b0d3f0a016d2ab35ebf1aaf |
+  Then I should receive the following item level discount with matchNetUnitPrice ${unitCalculateAmount} and ItemCode ${itemCode}
+    | amount | unitCalculateAmount | returnsAmount |
+    | ${discountAmount}    | ${unitCalculateAmount}   | ${returnsAmount}      |
+  And I should receive following selling engine notifications referenced promotions
+    | discountType | promotionType        | promotionName      | amount | totalDiscountAmount | level      | categoryId |
+    | ${discountType}    | ${promotionType} | ${promotionName} | ${amount}    | ${totalDiscountAmount} | ${level} | 0          |
+  `;
+
+          // Display the BDD scenario in the output area
+          bddOutput.textContent = bddScenario;
+        });
+      });
+    </script>
+  </body>
+</html>
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Function to login and get the access token
+        function loginAndGetToken() {
+          if (accessToken) {
+            console.log("Using existing access token:", accessToken);
+            return Promise.resolve(accessToken);
+          }
+
+          return fetch("/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              /* Add login credentials if needed */
+            }), 
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.accessKey) {
+                console.log("Login Successful, Access Key:", data.accessKey);
+                accessToken = data.accessKey;
+                return accessToken;
+              } else {
+                throw new Error("Login failed, no access key returned.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error during login:", error);
+              throw error;
+            });
+        }
+
+        // Function to make the API request and fetch promotion data
+    
+          function fetchDataUsingAccessKey() {
+            loginAndGetToken()
+              .then((accessKey) => {
+                const payload = {
+                  pageSize: "100",
+                  pageNumber: "0",
+                  name: {
+                    value: document.getElementById("value").value,
+                    operator: document.getElementById("operator").value,
+                  },
+                };
+
+                // Change the fetch URL to match the one from your second file
+                return fetch("/find-by-criteria", {
+                  // Assuming it's handled by your local server
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ accessKey, payload }),
+                });
+              })
+              .then((response) => {
+                if (!response.ok) {
+                  // Check for HTTP errors (like 404)
+                  throw new Error(
+                    "Network response was not ok: " + response.status
+                  );
+                }
+                return response.json();
+              })
+              .then((data) => {
+                console.log("Data received:", data);
+                if (data && data.promotionName && data.itemCodes) {
+                  storeData(data.promotionName, data.itemCodes);
+                  populateDropdowns();
+                } else {
+                  console.warn("Unexpected data format:", data);
+                }
+              })
+              .catch((error) => {
+                console.error("Error fetching promotion data:", error);
+              });
+          }
+        });
+
+        // Store data in local storage
+        function storeData(promotionNames, itemCodes) {
+          let storedPromotions = localStorage.getItem("promotionName");
+          let storedItemCodes =
+            JSON.parse(localStorage.getItem("itemCodes")) || [];
+
+          if (storedPromotions) {
+            try {
+              storedPromotions = JSON.parse(storedPromotions);
+            } catch (error) {
+              storedPromotions = [storedPromotions];
+            }
+          } else {
+            storedPromotions = [];
+          }
+
+          // Add new promotions and item codes if not already present
+          promotionNames.forEach((promotion) => {
+            if (!storedPromotions.includes(promotion)) {
+              storedPromotions.push(promotion);
+            }
+          });
+
+          itemCodes.forEach((itemCode) => {
+            if (!storedItemCodes.includes(itemCode)) {
+              storedItemCodes.push(itemCode);
+            }
+          });
+
+          localStorage.setItem(
+            "promotionName",
+            JSON.stringify(storedPromotions)
+          );
+          localStorage.setItem("itemCodes", JSON.stringify(storedItemCodes));
+        }
+
+        // Populate dropdowns with data from localStorage
+        function populateDropdowns() {
+          const promotionNameDropdown = document.getElementById(
+            "promotionNameDropdown"
+          );
+          const itemCodeDropdown = document.getElementById("itemCodeDropdown");
+
+          let storedPromotions = localStorage.getItem("promotionName");
+          const storedItemCodes =
+            JSON.parse(localStorage.getItem("itemCodes")) || [];
+
+          if (storedPromotions) {
+            try {
+              storedPromotions = JSON.parse(storedPromotions);
+            } catch (error) {
+              storedPromotions = [storedPromotions];
+            }
+          } else {
+            storedPromotions = [];
+          }
+
+          // Clear existing options
+          promotionNameDropdown.innerHTML =
+            '<option value="">Select Promotion Name</option>';
+          itemCodeDropdown.innerHTML =
+            '<option value="">Select Item Code</option>';
+
+          // Populate promotion names dropdown
+          storedPromotions.forEach((promotion) => {
+            const option = document.createElement("option");
+            option.value = promotion;
+            option.text = promotion;
+            promotionNameDropdown.appendChild(option);
+          });
+
+          // Populate item codes dropdown
+          storedItemCodes.forEach((itemCode) => {
+            const option = document.createElement("option");
+            option.value = itemCode;
+            option.text = itemCode;
+            itemCodeDropdown.appendChild(option);
+          });
+        }
+
+        // On page load, populate the dropdowns with any stored data
+        populateDropdowns();
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Fetcher</title>
+    <link rel="stylesheet" href="./datafetcher.css">
+</head>
+<body>
+    <div class="filter-container">
+        <h2 class="filter-title">Advanced Filters</h2>
+        <div class="filter-section">
+            <div class="filter-grid">
+                <div class="filter-item">
+                    <label for="column">Column:</label>
+                    <select id="column">
+                        <option value="promotionName">Promotion Name</option>
+                        <option value="promotionID">Promotion ID</option>
+                        <option value="consumerSegment">Consumer Segment</option>
+                    </select>
+                </div>
+    
+                <div class="filter-item">
+                    <label for="operator">Operator:</label>
+                    <select id="operator">
+                        <option value="EQUALS">Equals</option>
+                        <option value="CONTAINS">Contains</option>
+                        <option value="STARTS_WITH">StartsWith</option>
+                        <option value="ENDS_WITH">EndsWith</option>
+                    </select>
+                </div>
+    
+                <div class="filter-item">
+                    <label for="value">Value:</label>
+                    <input type="text" id="value" placeholder="Enter value">
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="remove-all" id="removeAllBtn">Remove All</button>
+            <button class="find-by-criteria" id="findByCriteriaBtn">Find by Criteria</button>
+        </div>
+    </div>
+    
+
+    <div class="background-animation"></div> <!-- New background animation container -->
+
+    <script src="./datafetcher.js"></script>
+</body>
+</html>

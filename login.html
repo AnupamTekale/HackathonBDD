@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCR Voyix Loyalty</title>
+    <link rel="stylesheet" href="./stylelogin.css">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'nonce-abcdef123';">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h1>NCR VOYIX LOYALTY</h1>
+            <p class="greeting">Hello, let's get started!</p>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="username">User name</label>
+                    <div class="input-container">
+                        <input type="text" id="username" name="username" autocomplete="off" aria-label="Enter username" required>
+                        <span class="icon" aria-hidden="true">&#128100;</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-container">
+                        <input type="password" id="password" name="password" autocomplete="off" aria-label="Enter password" required>
+                        <span class="icon" aria-hidden="true">&#128272;</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+
+            <p class="trouble-login">Trouble Logging In? <a href="#">Click Here</a></p>
+        </div>
+    </div>
+
+    <script nonce="abcdef123">
+        const loginForm = document.getElementById('login-form');
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Perform basic validation
+            if (username && password) {
+                window.location.href = 'landing.html'; // Redirect to landing page
+            } else {
+                alert('Please enter both username and password.');
+            }
+        });
+    </script>
+</body>
+</html>

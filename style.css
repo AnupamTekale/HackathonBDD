@@ -1,0 +1,150 @@
+/* General body styles */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Header styles */
+header {
+  background-color: #333;
+  padding: 10px; /* Reduced padding */
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: white;
+  margin-left: 20px; /* Added margin */
+}
+
+/* Hero section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url('./bg1.jpg'); /* Replace with your image path */
+  background-size: cover; /* Ensures the image covers the entire hero section */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  height: 100vh; /* Fullscreen height */
+  padding: 0;
+  position: relative;
+  margin-top: 40px; /* Compensate for fixed navbar */
+  animation: fadeIn 2s ease-in-out;
+}
+
+.hero .container {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero h1 {
+  font-size: 2.5em;
+  color: #333;
+}
+
+.hero p {
+  font-size: 1.2em;
+  color: #555;
+  margin-top: 10px;
+}
+
+.hero img {
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+  height: 70%;
+  max-width: 40%; /* Restrict image size */
+}
+
+/* Card Container */
+.card-container {
+  position: absolute;
+  right: 10%; /* Position to the right */
+  top: 50%; 
+  transform: translateY(-50%); /* Center vertically */
+  display: flex;
+  flex-direction: row; /* Display cards side by side */
+  gap: 20px; /* Space between the cards */
+  z-index: 10;
+  background-color: transparent; 
+  animation: fadeIn 1s ease-in-out forwards; /* Fade-in animation */
+  opacity: 0; /* Start hidden */
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Updated Card */
+.card {
+  width: 250px;
+  background: linear-gradient(135deg, #fff, #f0f0f0); /* Subtle gradient */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  backdrop-filter: blur(4px); /* Blurred background */
+  padding: 10px; /* Padding for better spacing */
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.05); /* Lift on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Card Content Styling */
+.card-content {
+  padding: 15px;
+}
+
+.card img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease; /* Smooth image animation */
+}
+
+.card:hover img {
+  transform: rotate(10deg) scale(1.1); /* Slight rotate and scale on hover */
+}
+
+.card h2 {
+  color: #333;
+  font-size: 1.1em;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .card-container {
+    flex-direction: column; /* Stack cards on smaller screens */
+    align-items: center; /* Center cards */
+    right: 0;
+    left: 0;
+  }
+
+  .card {
+    width: 80%; /* Adjust card width for smaller screens */
+  }
+}

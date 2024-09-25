@@ -1,0 +1,151 @@
+/* General container styling */
+body {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.filter-container {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  width: 80%;
+  font-family: Arial, sans-serif;
+  position: relative;
+  z-index: 2;
+  animation: fadeIn 1.5s ease-in-out;
+  transform: translateY(30px);
+}
+
+.filter-title {
+  font-size: 1.8em;
+  color: #6a1b9a;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Grid layout for the filter fields */
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.filter-item label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.filter-item select,
+.filter-item input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.filter-item input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+.filter-item select:focus,
+.filter-item input:focus {
+  border-color: #6a1b9a;
+  box-shadow: 0 0 5px rgba(106, 27, 154, 0.3);
+  outline: none;
+}
+
+/* Button styling */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.button-container button {
+  background-color: #6a1b9a;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.button-container button:hover {
+  background-color: #4a148c;
+  transform: translateY(-3px);
+}
+
+.button-container button.remove-all {
+  background-color: transparent;
+  color: #6a1b9a;
+  border: 1px solid #6a1b9a;
+}
+
+.button-container button.remove-all:hover {
+  background-color: #6a1b9a;
+  color: white;
+}
+
+/* New background animation */
+.background-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.background-animation::before {
+  content: '';
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle at center, rgba(106, 27, 154, 0.15), transparent);
+  animation: pulse 10s infinite;
+  border-radius: 50%;
+  top: -100%;
+  left: -100%;
+  transform: rotate(45deg);
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translate(-100%, -100%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
