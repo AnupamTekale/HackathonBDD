@@ -1,0 +1,109 @@
+body {
+  font-family: 'Comic Sans MS', cursive; /* Playful font */
+  background-color: #f5f5dc; /* Cream background for warmth */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden; /* Prevent overflow issues */
+  animation: bodyMove 5s infinite alternate; /* Fun body animation */
+}
+
+@keyframes bodyMove {
+  from {
+    background-color: #f5f5dc;
+  }
+  to {
+    background-color: #ffe4e1; /* Peach puff for fun */
+  }
+}
+
+.container {
+  background-color: #fffacd; /* Lemon chiffon for container */
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Larger shadow for effect */
+  text-align: center;
+  transform: rotate(0deg); /* Initial position */
+  animation: wiggle 2s ease-in-out infinite; /* Wiggling effect */
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+.astronaut {
+  width: 200px;
+  margin-bottom: 20px;
+  animation: floaty 3s ease-in-out infinite; /* Floating animation */
+}
+
+@keyframes floaty {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+h1 {
+  color: #008080; /* Teal for heading */
+  font-size: 36px;
+  text-shadow: 2px 2px #ff6347; /* Tomato red shadow */
+}
+
+.blinking {
+  animation: blinker 1s linear infinite;
+  color: #ff6347; /* Tomato red for blinking text */
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+p {
+  color: #800080; /* Purple for paragraph text */
+  font-size: 18px;
+  transform: scale(1); /* Initial size */
+  animation: pulse 2s infinite; /* Pulsing effect */
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+button {
+  background-color: #00ced1; /* Dark turquoise for button */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 50px; /* Fully rounded button */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Added transform transition */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Button shadow for pop */
+}
+
+button:hover {
+  background-color: #008b8b; /* Dark cyan on hover */
+  transform: scale(1.1); /* Make the button grow on hover */
+}
