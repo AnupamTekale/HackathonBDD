@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./builderstyle.css" />
     <title>Order Promotion Form</title>
+    <style>
+      #generatedScenario, #blackBox {
+        display: none; /* Hide by default */
+      }
+    </style>
   </head>
   <body>
     <script src="./datafetcher.js"></script>
@@ -59,7 +64,7 @@
           </div>
           <div class="form-group">
             <label for="unitPrice">Unit Price:</label>
-            <input type="text" id="unitPrice" placeholder="Enter Unit Price" />
+            <input type="number" id="unitPrice" placeholder="Enter Unit Price" min="0" />
           </div>
           <div class="form-group">
             <label for="clearanceLevel">Clearance Level:</label>
@@ -77,32 +82,35 @@
           <div class="form-group">
             <label for="discountAmount">Discount Amount:</label>
             <input
-              type="text"
+              type="number"
               id="discountAmount"
               placeholder="Enter Discount Amount"
+              min="0"
             />
           </div>
           <div class="form-group">
             <label for="unitCalculateAmount">Unit Calculate Amount:</label>
             <input
-              type="text"
+              type="number"
               id="unitCalculateAmount"
               placeholder="Enter Unit Calculate Amount"
+              min="0"
             />
           </div>
           <div class="form-group">
             <label for="returnsAmount">Returns Amount:</label>
             <input
-              type="text"
+              type="number"
               id="returnsAmount"
               placeholder="Enter Returns Amount"
+              min="0"
             />
           </div>
         </div>
 
         <!-- Section 4: Selling Engine Details -->
         <div class="form-section">
-          <h2>Selling Engine Details</h2>
+          <h2>Selling Engine Notifications Details</h2>
           <div class="form-group">
             <label for="discountType">Discount Type:</label>
             <select id="discountType">
@@ -128,14 +136,15 @@
           </div>
           <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="text" id="amount" placeholder="Enter The Amount" />
+            <input type="number" id="amount" placeholder="Enter The Amount" min="0" />
           </div>
           <div class="form-group">
             <label for="totalDiscountAmount">Total Discount Amount:</label>
             <input
-              type="text"
+              type="number"
               id="totalDiscountAmount"
               placeholder="Enter Total Discount Amount"
+              min="0"
             />
           </div>
           <div class="form-group">
@@ -155,21 +164,60 @@
       </form>
 
       <!-- Area to display the generated BDD Scenario -->
-      <div class="form-section">
+      <div id="generatedScenario" class="form-section">
         <h2>Generated BDD Scenario</h2>
         <pre id="bddScenarioOutput"></pre>
       </div>
-    </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("promotionForm");
         const bddOutput = document.getElementById("bddScenarioOutput");
+        const generatedScenarioSection = document.getElementById("generatedScenario");
+        const blackBox = document.getElementById("blackBox");
+
+        // Function to show an alert message
+        function showAlert(message) {
+          alert(message); // You can replace this with a custom modal if needed
+        }
+
+        // Validation function to check if all inputs are filled
+        function validateForm() {
+          const scenarioDescription = document.getElementById("scenarioDescription").value;
+          const itemCode = document.getElementById("itemCodeDropdown").value;
+          const itemName = document.getElementById("itemName").value;
+          const quantity = document.getElementById("quantity").value;
+          const unitPrice = document.getElementById("unitPrice").value;
+          const clearanceLevel = document.getElementById("clearanceLevel").value;
+          const discountAmount = document.getElementById("discountAmount").value;
+          const unitCalculateAmount = document.getElementById("unitCalculateAmount").value;
+          const returnsAmount = document.getElementById("returnsAmount").value;
+          const promotionName = document.getElementById("promotionNameDropdown").value;
+          const amount = document.getElementById("amount").value;
+          const totalDiscountAmount = document.getElementById("totalDiscountAmount").value;
+
+          // Check if any of the required fields are empty
+          if (
+            !scenarioDescription || !itemCode || !itemName || !quantity || !unitPrice ||
+            !clearanceLevel || !discountAmount || !unitCalculateAmount || !returnsAmount ||
+            !promotionName || !amount || !totalDiscountAmount
+          ) {
+            return false; // Validation failed
+          }
+
+          return true; // Validation passed
+        }
 
         form.addEventListener("submit", function (event) {
           event.preventDefault(); // Prevent form submission
 
-          // Collect form data
+          // Validate form inputs before generating the BDD scenario
+          if (!validateForm()) {
+            showAlert("Please fill in all required fields.");
+            return; // Stop execution if validation fails
+          }
+
+          // If validation passes, proceed to generate the BDD scenario
           const scenarioDescription = document.getElementById("scenarioDescription").value;
           const itemCode = document.getElementById("itemCodeDropdown").value;
           const itemName = document.getElementById("itemName").value;
@@ -180,20 +228,20 @@
           const discountAmount = document.getElementById("discountAmount").value;
           const unitCalculateAmount = document.getElementById("unitCalculateAmount").value;
           const returnsAmount = document.getElementById("returnsAmount").value;
-          const promotionName = document.getElementById("promotionNameDropdown").value;
           const discountType = document.getElementById("discountType").value;
+          const promotionName = document.getElementById("promotionNameDropdown").value;
           const promotionType = document.getElementById("promotionType").value;
           const amount = document.getElementById("amount").value;
           const totalDiscountAmount = document.getElementById("totalDiscountAmount").value;
           const level = document.getElementById("level").value;
 
-          // Generate BDD scenario with the requested format
+          // Construct the BDD Scenario
           const bddScenario = `
-Scenario: CategoryID_001 ${scenarioDescription}
+            Scenario: CategoryID_001 ${scenarioDescription}
   Given I have an order
   And Order has sale items with the following values
-    | sequenceId | itemCode     | itemName | quantity.units | quantity.unitType | unitPrice | clearanceLevel   |
-    | 100001     | ${itemCode} | ${itemName} | ${quantity} | ${unitType} | ${unitPrice} | ${clearanceLevel} |
+    | sequenceId | itemCode     | itemName    | quantity.units | quantity.unitType | unitPrice | clearanceLevel       |
+    | 100001     | ${itemCode}  | ${itemName} | ${quantity}    | ${unitType}       | ${unitPrice} | ${clearanceLevel} |
   When I submit the order to ULP GET with the following headers
     | nep-device-id | nep-application-key              |
     | 111111        | 8a0285826c687337016cfa50d9e7008d |
@@ -201,20 +249,25 @@ Scenario: CategoryID_001 ${scenarioDescription}
     | nep-device-id | nep-application-key              |
     | 111111        | 8a808f0d6b0d3f0a016d2ab35ebf1aaf |
   Then I should receive the following item level discount with matchNetUnitPrice ${unitCalculateAmount} and ItemCode ${itemCode}
-    | amount | unitCalculateAmount | returnsAmount |
-    | ${discountAmount}    | ${unitCalculateAmount}   | ${returnsAmount}      |
+    | amount              | unitCalculateAmount     | returnsAmount     |
+    | ${discountAmount}   | ${unitCalculateAmount}  | ${returnsAmount}  |
   And I should receive following selling engine notifications referenced promotions
-    | discountType | promotionType        | promotionName      | amount | totalDiscountAmount | level      | categoryId |
-    | ${discountType}    | ${promotionType} | ${promotionName} | ${amount}    | ${totalDiscountAmount} | ${level} | 0          |
+    | discountType     | promotionType    | promotionName    | amount     | totalDiscountAmount    | level      | categoryId |
+    | ${discountType}  | ${promotionType} | ${promotionName} | ${amount}  | ${totalDiscountAmount} | ${level}   | 0          |
   `;
 
-          // Display the BDD scenario in the output area
+          // Display the generated BDD Scenario in the designated section
           bddOutput.textContent = bddScenario;
+
+          // Show the "Generated BDD Scenario" and "Black Box" sections after the button is clicked
+          generatedScenarioSection.style.display = "block";
+          blackBox.style.display = "block";
         });
       });
     </script>
   </body>
 </html>
+
 
 
     <script>
