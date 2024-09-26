@@ -1,32 +1,55 @@
 /* General body styles */
 body {
-  font-family: sans-serif;
+  font-family: 'Comic Sans MS', cursive; /* Fun playful font */
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   overflow: hidden; /* Prevent scrolling */
+  background-color: #f0f8ff; /* Light fun color */
+  animation: backgroundShift 5s infinite alternate; /* Background color animation */
+}
+
+@keyframes backgroundShift {
+  0% {
+    background-color: #f0f8ff;
+  }
+  100% {
+    background-color: #e6f7ff;
+  }
 }
 
 /* Header styles */
 header {
-  background-color: #333;
-  padding: 10px; /* Reduced padding */
+  background-color: #511579; /* Fun, bright color */
+  padding: 20px;
   width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Increased shadow for effect */
   position: fixed;
   z-index: 20;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  animation: slideInDown 1.5s ease-in-out forwards; /* Animation for header sliding in */
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .logo {
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: white;
-  margin-left: 20px; /* Added margin */
+  margin-left: 20px;
+  text-shadow: 2px 2px #430451; /* Playful shadow effect */
 }
 
 /* Hero section */
@@ -34,117 +57,136 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: url('./bg1.jpg'); /* Replace with your image path */
-  background-size: cover; /* Ensures the image covers the entire hero section */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  height: 100vh; /* Fullscreen height */
+  background-image: url('./bg1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
   padding: 0;
   position: relative;
-  margin-top: 40px; /* Compensate for fixed navbar */
-  animation: fadeIn 2s ease-in-out;
+  margin-top: 60px; /* Compensate for fixed navbar */
+  animation: zoomIn 3s ease-in-out forwards; /* Hero section zooms in */
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
 }
 
 .hero .container {
   position: absolute;
-  top: 30%;
-  left: 5%;
+  top: 25%;
+  left: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  animation: fadeIn 3s ease-in-out;
 }
 
 .hero h1 {
-  font-size: 2.5em;
-  color: #333;
+  font-size: 3em;
+  color: #ff6347; /* Playful color for heading */
+  text-shadow: 2px 2px #008080;
+  transform: scale(1);
+  animation: bounce 2s infinite; /* Heading text bounces */
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .hero p {
-  font-size: 1.2em;
-  color: #555;
+  font-size: 1.5em;
+  color: #800080; /* Vibrant purple */
   margin-top: 10px;
+  animation: pulse 2s infinite; /* Pulsating paragraph text */
 }
 
-.hero img {
-  position: absolute;
-  left: 5%;
-  bottom: 5%;
-  height: 70%;
-  max-width: 40%; /* Restrict image size */
-}
-
-/* Card Container */
-.card-container {
-  position: absolute;
-  right: 10%; /* Position to the right */
-  top: 50%; 
-  transform: translateY(-50%); /* Center vertically */
-  display: flex;
-  flex-direction: row; /* Display cards side by side */
-  gap: 20px; /* Space between the cards */
-  z-index: 10;
-  background-color: transparent; 
-  animation: fadeIn 1s ease-in-out forwards; /* Fade-in animation */
-  opacity: 0; /* Start hidden */
-}
-
-/* Keyframes for fade-in animation */
-@keyframes fadeIn {
-  to {
-    opacity: 1;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
-/* Updated Card */
+/* Cards */
+.card-container {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out 1.5s forwards; /* Cards fade in */
+}
+
 .card {
   width: 250px;
-  background: linear-gradient(135deg, #fff, #f0f0f0); /* Subtle gradient */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  background: linear-gradient(135deg, #fff, #ffcccb); /* Subtle gradient */
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; 
-  backdrop-filter: blur(4px); /* Blurred background */
-  padding: 10px; /* Padding for better spacing */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(6px); /* Blurred effect */
+  padding: 20px;
+  transform: rotate(0);
+  animation: cardHover 4s infinite alternate ease-in-out; /* Slight hovering effect */
+}
+
+@keyframes cardHover {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
 }
 
 .card:hover {
-  transform: translateY(-10px) scale(1.05); /* Lift on hover */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-10px) scale(1.1); /* Lift and grow on hover */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Card Content Styling */
-.card-content {
-  padding: 15px;
-}
-
-.card img {
-  width: 50px;
-  height: 50px;
+.card-content img {
+  width: 70px;
+  height: 70px;
   margin-bottom: 10px;
-  transition: transform 0.3s ease; /* Smooth image animation */
+  animation: spin 4s linear infinite; /* Fun spinning image effect */
 }
 
-.card:hover img {
-  transform: rotate(10deg) scale(1.1); /* Slight rotate and scale on hover */
-}
+/* @keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
 
-.card h2 {
-  color: #333;
-  font-size: 1.1em;
+.card-content h2 {
+  color: #008b8b; /* Vibrant teal */
+  font-size: 1.3em;
   margin-top: 10px;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .card-container {
-    flex-direction: column; /* Stack cards on smaller screens */
-    align-items: center; /* Center cards */
-    right: 0;
-    left: 0;
-  }
-
-  .card {
-    width: 80%; /* Adjust card width for smaller screens */
-  }
+* {
+  text-decoration: none;
 }
